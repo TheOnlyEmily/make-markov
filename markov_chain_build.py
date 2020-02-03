@@ -1,4 +1,3 @@
-import networkx as nx
 import numpy as np
 
 
@@ -26,8 +25,8 @@ class MarkovChain:
         e2_index = self._get_prob_mat_index_for_(e2)
         self._increment_prob_mat_cell(e1_index, e2_index)
 
-    def _get_prob_mat_index_for_(self, edge):
-        return np.where(edge == self._gen_alphabet)[0]
+    def _get_prob_mat_index_for_(self, i):
+        return np.where(i == self._gen_alphabet)[0]
 
     def _increment_prob_mat_cell(self, i1, i2):
         value_at_index = self._prob_mat[i1, i2]
@@ -47,7 +46,6 @@ class MarkovChain:
 
 
     def generate_sequence_starting_with_(self, seq_start, seq_length):
-        assert len(seq_start) == 1
         assert seq_start in self._gen_alphabet
         assert type(seq_length) is int
         prob_vector = self._get_single_result_prob_vector(seq_start)
