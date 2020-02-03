@@ -5,8 +5,8 @@ class MarkovChain:
 
     def __init__(self, generator_alphabet, edge_list=None):
         assert all((l is not None) for l in generator_alphabet)
-        assert len(generator_alphabet) == len(set(generate_alphabet))
-        self._gen_alphabet = np.array(generate_alphabet)
+        assert len(generator_alphabet) == len(set(generator_alphabet))
+        self._gen_alphabet = np.array(generator_alphabet)
         alphabet_size = len(self._gen_alphabet)
         self._prob_mat = np.zeros(2 * [alphabet_size])
         self._mat_normalizer = 1
