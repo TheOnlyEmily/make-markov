@@ -62,3 +62,5 @@ class TestSecondaryHelperMethods:
             mc.update_from_edge_list([('a', 'a'), ('a', 'b'), ('b', 'a')])
 
             assert np.all(mc._prob_mat == expected_vector)
+
+    class Test
