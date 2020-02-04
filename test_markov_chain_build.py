@@ -54,4 +54,8 @@ class TestSecondaryHelperMethods:
         assert np.all(mc._prob_mat == expected_matrix)
 
     def test_generate_probability_vector_from_probability_vector(self):
-        mc = MarkovChain(('a', 'b'))
+        mc1 = MarkovChain(('a', 'b'), [('a', 'a')])
+        mc2 = MarkovChain(('a', 'b'), [('b', 'a')])
+
+        assert np.all(mc._prob_mat == np.array([[1, 0], [0, 0]]))
+        assert np.all(mc._prob_mat == np.array([[0, 0], [1, 0]]))
