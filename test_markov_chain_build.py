@@ -52,3 +52,6 @@ class TestSecondaryHelperMethods:
         mc.update_from_edge('a', 'b')
 
         assert np.all(mc._prob_mat == expected_matrix)
+
+    def test_generate_probability_vector_from_probability_vector(self):
+        mc = MarkovChain(('a', 'b'))
