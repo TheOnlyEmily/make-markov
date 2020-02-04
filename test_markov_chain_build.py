@@ -67,3 +67,24 @@ class TestSecondaryHelperMethods:
         assert np.all(mc1._generate_prob_vect_from_prob_vect(b_vector) == np.array([0, 0]))
         assert np.all(mc2._generate_prob_vect_from_prob_vect(a_vector) == np.array([0, 0]))
         assert np.all(mc2._generate_prob_vect_from_prob_vect(b_vector) == np.array([0, 1]))
+
+
+class TestPrimaryMethods:
+
+
+        class TestInit:
+
+            def test_without_edge_list_argument(self):
+                pass
+
+            def test_with_edge_list_argument(self):
+                pass
+
+
+        class TestSequenceGeneartion:
+
+            def test_without_specified_starting_character(self):
+                pass
+
+            def test_with_specified_starting character(self):
+                pass
