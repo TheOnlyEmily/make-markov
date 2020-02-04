@@ -55,7 +55,15 @@ class TestSecondaryHelperMethods:
 
     def test_generate_probability_vector_from_probability_vector(self):
         mc1 = MarkovChain(('a', 'b'), [('a', 'a')])
-        mc2 = MarkovChain(('a', 'b'), [('b', 'a')])
+        mc2 = MarkovChain(('a', 'b'), [('b', 'b')])
 
-        assert np.all(mc._prob_mat == np.array([[1, 0], [0, 0]]))
-        assert np.all(mc._prob_mat == np.array([[0, 0], [1, 0]]))
+        a_vector = np.array([1, 0])
+        b_vector = np.array([0, 1])
+
+        assert np.all(mc1._prob_mat == np.array([[1, 0], [0, 0]]))
+        assert np.all(mc2._prob_mat == np.array([[0, 0], [0, 1]]))
+
+        assert np.all(mc1._generate_prob_vect_from_prob_vect(a_vector) == np.array([1, 0]))
+        assert np.all(mc1._generate_prob_vect_from_prob_vect(b_vector) == np.array([0, 0]))
+        assert np.all(mc2._generate_prob_vect_from_prob_vect(a_vector) == np.array([0, 0]))
+        assert np.all(mc2._generate_prob_vect_from_prob_vect(b_vector) == np.array([0, 1]))
