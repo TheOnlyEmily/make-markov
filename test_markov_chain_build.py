@@ -41,3 +41,24 @@ class TestBaseHelperMethods:
             expected_vector = np.array([1, 0])
             mc = MarkovChain(('a', 'b'))
             assert np.all(mc._get_single_result_prob_vector('a') == expected_vector)
+
+
+class TestSecondaryHelperMethods:
+
+    class TestEdgeUpdate:
+
+        def test_update_from_edge(self):
+            expected_vector = np.array([[0, 1], [0, 0]])
+
+            mc = MarkovChain(('a', 'b'))
+            mc.update_from_edge('a', 'b')
+
+            assert np.all(mc._prob_mat == expected_vector)
+
+        def test_update_from_edge_list(self):
+            expected_vector = np.array([[1, 1], [1, 0]])
+
+            mc = MarkovChain(('a', 'b'))
+            mc.update_from_edge_list([('a', 'a'), ('a', 'b'), ('b', 'a')])
+
+            assert np.all(mc._prob_mat == expected_vector)
