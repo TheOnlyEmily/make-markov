@@ -31,7 +31,7 @@ class MarkovChain:
     def _increment_prob_mat_cell(self, i1, i2):
         value_at_index = self._prob_mat[i1, i2]
         value_at_index += 1
-        self._mat_normalizer = max(self._mat_normalizer, value_at_index)
+        self._mat_normalizer = self._prob_mat.sum()
         self._prob_mat[i1, i2] = value_at_index
 
     def generate_sequence(self, seq_length):
