@@ -30,7 +30,7 @@ class MarkovChain:
 
     def _increment_prob_mat_cell(self, i1, i2):
         self._prob_mat[i1, i2] += 1
-        self._mat_normalizer = self._prob_mat.sum()
+        self._mat_normalizer = self._prob_mat.sum(axis=1).reshape((-1, 1))
 
     def generate_sequence(self, seq_length):
         assert type(seq_length) is int
@@ -41,7 +41,6 @@ class MarkovChain:
             return_sequence.extend(next)
             prob_vector = self._generate_prob_vect_from_prob_vect(prob_vector)
         return return_sequence
-
 
     def generate_sequence_starting_with_(self, seq_start, seq_length):
         assert seq_start in self._gen_alphabet
