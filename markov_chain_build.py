@@ -29,10 +29,8 @@ class MarkovChain:
         return np.where(i == self._gen_alphabet)[0]
 
     def _increment_prob_mat_cell(self, i1, i2):
-        value_at_index = self._prob_mat[i1, i2]
-        value_at_index += 1
+        self._prob_mat[i1, i2] += 1
         self._mat_normalizer = self._prob_mat.sum()
-        self._prob_mat[i1, i2] = value_at_index
 
     def generate_sequence(self, seq_length):
         assert type(seq_length) is int
