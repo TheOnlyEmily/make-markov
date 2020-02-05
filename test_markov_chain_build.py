@@ -99,7 +99,7 @@ class TestPrimaryMethods:
                 assert len(result) == 5
                 assert all((e == 'a') or (e == 'b') for e in result)
 
-            def test_with_specified_starting character(self):
+            def test_with_specified_starting_character(self):
                 mc = MarkovChain(('a', 'b'), [('a', 'a'), ('a', 'b'), ('b', 'a')])
 
                 result = mc.generate_sequence('a', 5)
