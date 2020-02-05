@@ -37,17 +37,18 @@ class MarkovChain:
     def generate_sequence(self, seq_length):
         assert type(seq_length) is int
         prob_vector = self._get_equally_likely_prob_vect()
-        return_sequence = []
-        for _ in range(seq_length):
-            next = np.random.choice(self._gen_alphabet, 1, p=prob_vector)
-            return_sequence.extend(next)
-            prob_vector = self._generate_prob_vect_from_prob_vect(prob_vector)
-        return return_sequence
+        return self._generate_sequence_from_prob_vector(prob_vector, seq_length)
 
     def generate_sequence_starting_with_(self, seq_start, seq_length):
         assert seq_start in self._gen_alphabet
         assert type(seq_length) is int
         prob_vector = self._get_single_result_prob_vector(seq_start)
+        return self._generate_sequence_from_prob_vector(prob_vector, seq_length)
+
+    def _generate_sequence_from_prob_vector(self, prob_vector, seq_length):
+        assert type(prob_vector) is np.ndarray
+        assert sum(prob_vector) == 1
+        assert all(p >= 0 for p in prob_vector)
         return_sequence = []
         for _ in range(seq_length):
             next = np.random.choice(self._gen_alphabet, 1, p=prob_vector)
