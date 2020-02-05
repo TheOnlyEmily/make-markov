@@ -92,7 +92,18 @@ class TestPrimaryMethods:
         class TestSequenceGeneartion:
 
             def test_without_specified_starting_character(self):
-                pass
+                mc = MarkovChain(('a', 'b'), [('a', 'a'), ('a', 'b'), ('b', 'a')])
+
+                result = mc.generate_sequence(5)
+
+                assert len(result) == 5
+                assert all((e == 'a') or (e == 'b') for e in result)
 
             def test_with_specified_starting character(self):
-                pass
+                mc = MarkovChain(('a', 'b'), [('a', 'a'), ('a', 'b'), ('b', 'a')])
+
+                result = mc.generate_sequence('a', 5)
+
+                assert result[0] == 'a'
+                assert len(result) == 5
+                assert all((e == 'a') or (e == 'b') for e in result)
