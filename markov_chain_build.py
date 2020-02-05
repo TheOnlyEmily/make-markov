@@ -58,8 +58,8 @@ class MarkovChain:
 
     def _generate_prob_vect_from_prob_vect(self, prob_vector):
         assert type(prob_vector) is np.ndarray
-        assert prob_vector.size == self._prob_mat.size[0]
-        assert prob_vector.size == self._prob_mat.size[1]
+        assert prob_vector.size == self._prob_mat.shape[0]
+        assert prob_vector.size == self._prob_mat.shape[1]
         assert np.sum(prob_vector) == 1
         assert np.all((p <= 1) for p in prob_vector)
         return np.dot(prob_vector, self._prob_mat / self._mat_normalizer)
