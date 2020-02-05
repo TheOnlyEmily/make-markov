@@ -89,7 +89,7 @@ class TestPrimaryMethods:
                 assert np.all(mc._mat_normalizer == np.array([[1], [1]]))
 
 
-        class TestSequenceGeneartion:
+        class TestSequenceGeneration:
 
             def test_without_specified_starting_character(self):
                 mc = MarkovChain(('a', 'b'), [('a', 'a'), ('a', 'b'), ('b', 'a')])
