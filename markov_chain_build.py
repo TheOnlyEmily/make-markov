@@ -31,6 +31,8 @@ class MarkovChain:
     def _increment_prob_mat_cell(self, i1, i2):
         self._prob_mat[i1, i2] += 1
         self._mat_normalizer = self._prob_mat.sum(axis=1).reshape((-1, 1))
+        zero_locations = self._mat_normalizer == 0
+        self._mat_normalizer[zero_locations] = 1
 
     def generate_sequence(self, seq_length):
         assert type(seq_length) is int
