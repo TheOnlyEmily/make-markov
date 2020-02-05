@@ -79,14 +79,14 @@ class TestPrimaryMethods:
 
                 assert np.all(mc._gen_alphabet == np.array(['a', 'b']))
                 assert np.all(mc._prob_mat == np.array([[0, 0], [0, 0]]))
-                assert np.all(mc._mat_normalizer == np.array([[0], [0]]))
+                assert np.all(mc._mat_normalizer == np.array([[1], [1]]))
 
             def test_with_edge_list_argument(self):
                 mc = MarkovChain(('a', 'b'), [('a', 'a')])
 
                 assert np.all(mc._gen_alphabet == np.array(['a', 'b']))
                 assert np.all(mc._prob_mat == np.array([[1, 0], [0, 0]]))
-                assert np.all(mc._mat_normalizer == np.array([[1], [0]]))
+                assert np.all(mc._mat_normalizer == np.array([[1], [1]]))
 
 
         class TestSequenceGeneartion:
@@ -102,7 +102,7 @@ class TestPrimaryMethods:
             def test_with_specified_starting_character(self):
                 mc = MarkovChain(('a', 'b'), [('a', 'a'), ('a', 'b'), ('b', 'a')])
 
-                result = mc.generate_sequence('a', 5)
+                result = mc.generate_sequence_starting_with_('a', 5)
 
                 assert result[0] == 'a'
                 assert len(result) == 5
