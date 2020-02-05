@@ -1,3 +1,4 @@
 
 __pycache__/markov_chain_build.cpython-37.pyc
 *.pyc
+diagnostics.py
