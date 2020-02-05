@@ -79,14 +79,14 @@ class TestPrimaryMethods:
 
                 assert np.all(mc._gen_alphabet == np.array(['a', 'b']))
                 assert np.all(mc._prob_mat == np.array([[0, 0], [0, 0]]))
-                assert mc._mat_normalizer == 1
+                assert mc._mat_normalizer == np.array([[0], [0]])
 
             def test_with_edge_list_argument(self):
                 mc = MarkovChain(('a', 'b'), [('a', 'a')])
 
                 assert np.all(mc._gen_alphabet == np.array(['a', 'b']))
                 assert np.all(mc._prob_mat == np.array([[1, 0], [0, 0]]))
-                assert mc._mat_normalizer == 1
+                assert mc._mat_normalizer == np.array([[1], [0]])
 
 
         class TestSequenceGeneartion:
