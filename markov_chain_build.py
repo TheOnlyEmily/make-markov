@@ -9,7 +9,7 @@ class MarkovChain:
         self._gen_alphabet = np.array(generator_alphabet)
         alphabet_size = len(self._gen_alphabet)
         self._prob_mat = np.zeros(2 * [alphabet_size])
-        self._mat_normalizer = 1
+        self._mat_normalizer = np.zeros(alphabet_size).reshape((-1, 1))
         if edge_list:
             self.update_from_edge_list(edge_list)
 
