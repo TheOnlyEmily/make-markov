@@ -1,12 +1,14 @@
 import numpy as np
-from contracts import contract
+
 
 
 class MarkovChain:
 
-    @contract(generator_alphabet="list[N]",
-              edge_list="list[T],type(T) is tuple,len(T) == 2")
     def __init__(self, generator_alphabet, edge_list=None):
+        """
+        :type generator_alphabet: list[N] | tuple[N], N > 0
+        :type edge_list: None | list(tuple[N]) | tuple(tuple[N]), N > 0
+        """
         self._gen_alphabet = np.array(generator_alphabet)
         alphabet_size = len(self._gen_alphabet)
         self._prob_mat = CoreProbabilityMatrix(alphabet_size)
@@ -14,9 +16,13 @@ class MarkovChain:
             self.update_from_edge_list(edge_list)
 
     def update_from_edge_list(self, edge_list):
+        """
+        :type edge_list: list(tuple[N]) | tuple(tuple[N]), N > 0
+        """
         assert all((len(edge) == 2) for edge in edge_list)
         for e1, e2 in edge_list:
             self.update_from_edge(e1, e2)
+
 
     def update_from_edge(self, e1, e2):
         assert e1 in self._gen_alphabet
@@ -29,20 +35,31 @@ class MarkovChain:
         return np.where(i == self._gen_alphabet)[0]
 
     def generate_sequence(self, seq_length):
-        assert type(seq_length) is int
+        """
+        :type seq_length: int
+        :rtype: list[N], N > 0
+        """
         prob_vector = self._get_equally_likely_prob_vect()
         return self._generate_sequence_from_prob_vector(prob_vector, seq_length)
 
     def generate_sequence_starting_with_(self, seq_start, seq_length):
+        """
+        :type seq_start: *
+        :type seq_length: int
+        :rtype: list[N], N > 0
+        """
         assert seq_start in self._gen_alphabet
-        assert type(seq_length) is int
         prob_vector = self._get_single_result_prob_vector(seq_start)
         return self._generate_sequence_from_prob_vector(prob_vector, seq_length)
 
+
     def _generate_sequence_from_prob_vector(self, prob_vector, seq_length):
-        assert type(prob_vector) is np.ndarray
+        """
+        :type prob_vector: array[N](float | int, >= 0, <= 1), N > 0
+        :type seq_length: int
+        :rtype: list[M], M > 0
+        """
         assert sum(prob_vector) == 1
-        assert all(p >= 0 for p in prob_vector)
         return_sequence = []
         for _ in range(seq_length):
             next = np.random.choice(self._gen_alphabet, 1, p=prob_vector)
@@ -72,9 +89,10 @@ class CoreProbabilityMatrix:
         self._mat_normalizer[zero_locations] = 1
 
     def _generate_prob_vect_from_prob_vect(self, prob_vector):
-        assert type(prob_vector) is np.ndarray
+        """
+        :type prob_vector: array[N](float | int, >= 0, <= 1), N > 0
+        """
         assert prob_vector.size == self._core_mat.shape[0]
         assert prob_vector.size == self._core_mat.shape[1]
         assert np.sum(prob_vector) == 1
-        assert np.all((p <= 1) for p in prob_vector)
         return np.dot(prob_vector, self._core_mat / self._mat_normalizer)
