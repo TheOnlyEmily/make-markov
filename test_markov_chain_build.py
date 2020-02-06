@@ -23,11 +23,11 @@ class TestBaseHelperMethods:
 
             mc = MarkovChain(('a', 'b'))
 
-            assert np.all(mc._prob_mat == initial_prob_matrix)
+            assert np.all(mc._prob_mat._core_mat == initial_prob_matrix)
 
-            mc._increment_prob_mat_cell(A_INDEX, B_INDEX)
+            mc._prob_mat._increment_prob_mat_cell(A_INDEX, B_INDEX)
 
-            assert np.all(mc._prob_mat == final_prob_matrix)
+            assert np.all(mc._prob_mat._core_mat == final_prob_matrix)
 
 
     class TestGetProbabilityVector:
@@ -51,7 +51,7 @@ class TestSecondaryHelperMethods:
         mc = MarkovChain(('a', 'b'))
         mc.update_from_edge('a', 'b')
 
-        assert np.all(mc._prob_mat == expected_matrix)
+        assert np.all(mc._prob_mat._core_mat == expected_matrix)
 
     def test_generate_probability_vector_from_probability_vector(self):
         mc1 = MarkovChain(('a', 'b'), [('a', 'a')])
@@ -60,13 +60,13 @@ class TestSecondaryHelperMethods:
         a_vector = np.array([1, 0])
         b_vector = np.array([0, 1])
 
-        assert np.all(mc1._prob_mat == np.array([[1, 0], [0, 0]]))
-        assert np.all(mc2._prob_mat == np.array([[0, 0], [0, 1]]))
+        assert np.all(mc1._prob_mat._core_mat == np.array([[1, 0], [0, 0]]))
+        assert np.all(mc2._prob_mat._core_mat == np.array([[0, 0], [0, 1]]))
 
-        assert np.all(mc1._generate_prob_vect_from_prob_vect(a_vector) == np.array([1, 0]))
-        assert np.all(mc1._generate_prob_vect_from_prob_vect(b_vector) == np.array([0, 0]))
-        assert np.all(mc2._generate_prob_vect_from_prob_vect(a_vector) == np.array([0, 0]))
-        assert np.all(mc2._generate_prob_vect_from_prob_vect(b_vector) == np.array([0, 1]))
+        assert np.all(mc1._prob_mat._generate_prob_vect_from_prob_vect(a_vector) == np.array([1, 0]))
+        assert np.all(mc1._prob_mat._generate_prob_vect_from_prob_vect(b_vector) == np.array([0, 0]))
+        assert np.all(mc2._prob_mat._generate_prob_vect_from_prob_vect(a_vector) == np.array([0, 0]))
+        assert np.all(mc2._prob_mat._generate_prob_vect_from_prob_vect(b_vector) == np.array([0, 1]))
 
 
 class TestPrimaryMethods:
@@ -78,14 +78,14 @@ class TestPrimaryMethods:
                 mc = MarkovChain(('a', 'b'))
 
                 assert np.all(mc._gen_alphabet == np.array(['a', 'b']))
-                assert np.all(mc._prob_mat == np.array([[0, 0], [0, 0]]))
+                assert np.all(mc._prob_mat._core_mat == np.array([[0, 0], [0, 0]]))
                 assert np.all(mc._mat_normalizer == np.array([[1], [1]]))
 
             def test_with_edge_list_argument(self):
                 mc = MarkovChain(('a', 'b'), [('a', 'a')])
 
                 assert np.all(mc._gen_alphabet == np.array(['a', 'b']))
-                assert np.all(mc._prob_mat == np.array([[1, 0], [0, 0]]))
+                assert np.all(mc._prob_mat._core_mat == np.array([[1, 0], [0, 0]]))
                 assert np.all(mc._mat_normalizer == np.array([[1], [1]]))
 
 

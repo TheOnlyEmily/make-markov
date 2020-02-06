@@ -61,19 +61,19 @@ class MarkovChain:
 class CoreProbabilityMatrix:
 
     def __init__(self, alphabet_size):
-        self._prob_mat = np.zeros(2 * [alphabet_size])
+        self._core_mat = np.zeros(2 * [alphabet_size])
         self._mat_normalizer = np.ones(alphabet_size).reshape((-1, 1))
 
     def _increment_prob_mat_cell(self, i1, i2):
-        self._prob_mat[i1, i2] += 1
-        self._mat_normalizer = self._prob_mat.sum(axis=1).reshape((-1, 1))
+        self._core_mat[i1, i2] += 1
+        self._mat_normalizer = self._core_mat.sum(axis=1).reshape((-1, 1))
         zero_locations = self._mat_normalizer == 0
         self._mat_normalizer[zero_locations] = 1
 
     def _generate_prob_vect_from_prob_vect(self, prob_vector):
         assert type(prob_vector) is np.ndarray
-        assert prob_vector.size == self._prob_mat.shape[0]
-        assert prob_vector.size == self._prob_mat.shape[1]
+        assert prob_vector.size == self._core_mat.shape[0]
+        assert prob_vector.size == self._core_mat.shape[1]
         assert np.sum(prob_vector) == 1
         assert np.all((p <= 1) for p in prob_vector)
-        return np.dot(prob_vector, self._prob_mat / self._mat_normalizer)
+        return np.dot(prob_vector, self._core_mat / self._mat_normalizer)
