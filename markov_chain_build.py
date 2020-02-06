@@ -1,11 +1,12 @@
 import numpy as np
+from contracts import contract
 
 
 class MarkovChain:
 
+    @contract(generator_alphabet="list[N]",
+              edge_list="list[T],type(T) is tuple,len(T) == 2")
     def __init__(self, generator_alphabet, edge_list=None):
-        assert all((l is not None) for l in generator_alphabet)
-        assert len(generator_alphabet) == len(set(generator_alphabet))
         self._gen_alphabet = np.array(generator_alphabet)
         alphabet_size = len(self._gen_alphabet)
         self._prob_mat = CoreProbabilityMatrix(alphabet_size)
